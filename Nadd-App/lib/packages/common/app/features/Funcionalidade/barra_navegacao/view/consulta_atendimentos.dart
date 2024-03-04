@@ -84,10 +84,7 @@ class _ConsultaAtendimentosState extends State<ConsultaAtendimentos> {
                   //Função para listar o Atendimento buscados
                   ListarDadosApi(
                     dadosApi: informacoesAtendimentos.value,
-                    mapeamentoCampos: const {
-                      'pessoa.nome': 'Nome',
-                      'dataHora': 'Data'
-                    },
+                    mapeamentoCampos: const {'pessoa.nome': 'Nome'},
                     mostrarDialogCallback:
                         (BuildContext context, Map<String, dynamic> dados) {
                       DateTime dataHora = DateTime.parse(dados['dataHora']);

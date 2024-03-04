@@ -2,17 +2,9 @@ import "dart:convert";
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/atendimento.dart';
 import 'package:nadd/packages/common/app/features/ui/cores/cores.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Server/api_config.dart';
-
-String formatarData(String data) {
-  final formatoEntrada = DateFormat('dd/MM/yyyy');
-  final formatoSaida = DateFormat('yyyy-MM-dd');
-  final dataFormatada = formatoSaida.format(formatoEntrada.parse(data));
-  return dataFormatada;
-}
 
 //buscar atendimentos pelo id
 class BuscarAtendimentosId {

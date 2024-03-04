@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/atendentes.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/pessoa.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/tipo_atendimento.dart';
@@ -42,4 +43,11 @@ class DadosDeAtendimento {
       dataHora: json['dataHora'] ?? '',
     );
   }
+}
+
+String formatarData(String data) {
+  final formatoEntrada = DateFormat('dd/MM/yyyy');
+  final formatoSaida = DateFormat('yyyy-MM-dd');
+  final dataFormatada = formatoSaida.format(formatoEntrada.parse(data));
+  return dataFormatada;
 }

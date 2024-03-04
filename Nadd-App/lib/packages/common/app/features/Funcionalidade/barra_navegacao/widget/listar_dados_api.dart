@@ -24,7 +24,7 @@ class ListarDadosApi extends StatelessWidget {
         ? SizedBox(
             height: altura,
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.all(10.0),
               child: ListView.builder(
                 itemCount: dadosApi!.length,
                 itemBuilder: (BuildContext context, index) {
@@ -38,17 +38,14 @@ class ListarDadosApi extends StatelessWidget {
   }
 
   Widget _buildItem(BuildContext context, Map<String, dynamic> dado) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: azulLogo.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: 2.5, color: azul),
-        ),
-        child: Column(
-          children: _getCamposWidgets(context, dado),
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: azulLogo.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(width: 2.5, color: azul),
+      ),
+      child: Column(
+        children: _getCamposWidgets(context, dado),
       ),
     );
   }
