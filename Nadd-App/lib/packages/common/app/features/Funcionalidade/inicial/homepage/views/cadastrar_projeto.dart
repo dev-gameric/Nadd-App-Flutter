@@ -20,7 +20,8 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
   TextEditingController dataFimController = TextEditingController();
   TextEditingController proponenteController = TextEditingController();
   TextEditingController nomeController = TextEditingController();
-  TextEditingController statusController = TextEditingController();
+  TextEditingController statusProjetoController = TextEditingController();
+  String? dropdownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +79,21 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
                           icone: Icons.calendar_month,
                           tipo: 'Data Fim',
                           editingController: dataFimController),
-                      Formulario(
-                        chave: 'statusProjeto',
-                        icone: Icons.personal_injury_outlined,
-                        tipo: 'Status',
-                        editingController: statusController,
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
+                        },
+                        items: <String>['Andamento', 'Planejado', 'Encerrado']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        isExpanded: true,
                       ),
                     ],
                   ),
@@ -99,7 +110,9 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
                       proponente: proponenteController.text,
                       dataInicio: formatarData(dataInicioController.text),
                       dataFim: formatarData(dataFimController.text),
-                      statusProjetoEnum: statusController.text.toUpperCase(),
+                      statusProjetoEnum: dropdownValue != null
+                          ? dropdownValue!.toUpperCase()
+                          : '',
                     );
 
                     await cadastrarProjeto(dados);
