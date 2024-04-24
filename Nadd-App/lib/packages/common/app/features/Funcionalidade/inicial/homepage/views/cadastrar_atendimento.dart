@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nadd/packages/common/app/features/Funcionalidade/inicial/homepage/widgets/dropdown_button.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Services/atendimento_service.dart';
 import 'package:nadd/packages/common/app/features/ui/cores/cores.dart';
 import 'package:nadd/packages/common/app/features/ui/tamanho/sizes.dart';
@@ -25,6 +26,10 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
   final pessoaController = TextEditingController();
   final atendenteController = TextEditingController();
   final tipoAtendimentoController = TextEditingController();
+  String? dropdownButtonAtendente;
+  String? dropdownButtonPessoa;
+  String? dropdownButtonTipoAtendimento;
+  String? dropdownButtonRepentinoGradual;
 
   @override
   Widget build(BuildContext context) {
@@ -108,29 +113,53 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
                       ),
                       maxLines: null,
                     ),
-                    Formulario(
-                      chave: 'repentinoGradual',
-                      icone: Icons.personal_injury_outlined,
-                      tipo: 'Repentino ou Gradual',
-                      editingController: repentinoGradualController,
+                    // Formulario(
+                    //   chave: 'repentinoGradual',
+                    //   icone: Icons.personal_injury_outlined,
+                    //   tipo: 'Repentino ou Gradual',
+                    //   editingController: repentinoGradualController,
+                    // ),
+                    // Formulario(
+                    //   chave: '',
+                    //   icone: Icons.personal_injury_outlined,
+                    //   tipo: 'Atendente',
+                    //   editingController: atendenteController,
+                    // ),
+                    // Formulario(
+                    //   chave: '',
+                    //   icone: Icons.personal_injury_outlined,
+                    //   tipo: 'Pessoa',
+                    //   editingController: pessoaController,
+                    // ),
+                    // Formulario(
+                    //   chave: '',
+                    //   icone: Icons.personal_injury_outlined,
+                    //   tipo: 'Tipo Atendimento',
+                    //   editingController: tipoAtendimentoController,
+                    // ),
+                    DropdownButtonWidget(
+                      value: dropdownButtonRepentinoGradual,
+                      items: const [
+                        'Repentino',
+                        'Gradual',
+                      ],
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownButtonRepentinoGradual = newValue;
+                        });
+                      },
                     ),
-                    Formulario(
-                      chave: '',
-                      icone: Icons.personal_injury_outlined,
-                      tipo: 'Atendente',
-                      editingController: atendenteController,
-                    ),
-                    Formulario(
-                      chave: '',
-                      icone: Icons.personal_injury_outlined,
-                      tipo: 'Pessoa',
-                      editingController: pessoaController,
-                    ),
-                    Formulario(
-                      chave: '',
-                      icone: Icons.personal_injury_outlined,
-                      tipo: 'Tipo Atendimento',
-                      editingController: tipoAtendimentoController,
+                    DropdownButtonWidget(
+                      value: dropdownButtonRepentinoGradual,
+                      items: const [
+                        'Repentino',
+                        'Gradual',
+                      ],
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownButtonRepentinoGradual = newValue;
+                        });
+                      },
                     ),
                   ],
                 ),
