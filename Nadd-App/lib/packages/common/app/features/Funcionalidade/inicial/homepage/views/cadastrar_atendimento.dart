@@ -149,23 +149,10 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
                         });
                       },
                     ),
-                    DropdownButtonWidget(
-                      value: dropdownButtonRepentinoGradual,
-                      items: const [
-                        'Repentino',
-                        'Gradual',
-                      ],
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownButtonRepentinoGradual = newValue;
-                        });
-                      },
-                    ),
                   ],
                 ),
               ),
             ),
-
             //botão cadastrar projeto
             Padding(
               padding: const EdgeInsets.only(bottom: 40),
