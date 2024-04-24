@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [DropdownMenu].
+class DropdownButtonWidget extends StatelessWidget {
+  final List<String> items;
+  final Function(String?) onChanged;
+  final String? value;
 
-const List<String> list = <String>['ANDAMENTO', 'PLANEJADO', 'ENCERRADO'];
-
-class DropdownMenuExample extends StatefulWidget {
-  const DropdownMenuExample({super.key});
-
-  @override
-  State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
-}
-
-class _DropdownMenuExampleState extends State<DropdownMenuExample> {
-  String dropdownValue = list.first;
+  const DropdownButtonWidget({
+    super.key,
+    required this.items,
+    required this.onChanged,
+    required this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenu<String>(
-      initialSelection: list.first,
-      onSelected: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
-        return DropdownMenuEntry<String>(value: value, label: value);
+    return DropdownButton<String>(
+      value: value,
+      onChanged: onChanged,
+      items: items.map((String item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
       }).toList(),
     );
   }

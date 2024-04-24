@@ -83,3 +83,32 @@ Future<bool> cadastrarProjeto(DadosDoProjeto dados) async {
 
   return resposta;
 }
+
+//deletar projetos
+class DeletarProjetoService {
+  Future<void> deleteProjeto(int id) async {
+    String url = '$host/projetos/$id';
+
+    try {
+      var response = await http.delete(Uri.parse(url));
+      if (response.statusCode == 204) {
+        Get.snackbar(
+            backgroundColor: azulLogo,
+            'Concluído',
+            'Projeto deletado com sucesso',
+            colorText: amarelo);
+        print('Produto deletado com sucesso!');
+      } else {
+        Get.snackbar(
+            backgroundColor: azulLogo,
+            'Erro',
+            'Falha ao projeto deletar com sucesso: ${response.statusCode}',
+            colorText: amarelo);
+        print(
+            'Falha ao deletar o produto. Código de status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao realizar a requisição: $e');
+    }
+  }
+}
