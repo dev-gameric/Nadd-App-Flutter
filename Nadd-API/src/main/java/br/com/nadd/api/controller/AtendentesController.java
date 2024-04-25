@@ -23,7 +23,7 @@ public class AtendentesController {
     @Autowired
     private CadastroAtendentesService cadastroAtendentes;
 
-    @GetMapping
+    @GetMapping("/a")
     public List<Atendentes> listar() {
         return atendenteRepository.listar();
     }

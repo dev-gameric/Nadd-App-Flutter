@@ -60,15 +60,14 @@ Future<bool> cadastrarAtendimento(
   observacaoController,
   ocorrenciaController,
   queixaPrincipalController,
-  repentinoGradualController,
+  dropdownButtonRepentinoGradual,
   sintomasController,
-  pessoaController,
-  atendenteController,
-  tipoAtendimentoController,
+  pessoaID,
+  atendenteId,
+  tipoAtendimentoId,
 ) async {
   String dataFormatada = formatarData(dataController.text);
-  repentinoGradualController.text =
-      repentinoGradualController.text.toUpperCase();
+  dropdownButtonRepentinoGradual = dropdownButtonRepentinoGradual.toUpperCase();
   bool resposta;
   resposta = false;
 
@@ -78,14 +77,14 @@ Future<bool> cadastrarAtendimento(
     body: jsonEncode({
       'dataHora': dataFormatada,
       'queixaPrincipal': queixaPrincipalController.text,
-      'repentinoGradualEnum': repentinoGradualController.text,
+      'repentinoGradualEnum': dropdownButtonRepentinoGradual,
       'comoComecou': comoComecouController.text,
       'ocorrencia': ocorrenciaController.text,
       'sintomas': sintomasController.text,
       'observacao': observacaoController.text,
-      'atendentes': {'id': atendenteController.text},
-      'tipoAtendimento': {'id': tipoAtendimentoController.text},
-      'pessoa': {'id': pessoaController.text},
+      'atendentes': {'id': atendenteId},
+      'tipoAtendimento': {'id': tipoAtendimentoId},
+      'pessoa': {'id': pessoaID},
     }),
   );
 
@@ -112,4 +111,33 @@ Future<bool> cadastrarAtendimento(
   }
 
   return resposta;
+}
+
+//deletar Atendimento
+class DeletarAtendimentoService {
+  Future<void> deleteAtendimento(int idAtendimentoSelecionado) async {
+    String url = '$host/atendimentos/$idAtendimentoSelecionado';
+
+    try {
+      var response = await http.delete(Uri.parse(url));
+      if (response.statusCode == 204) {
+        Get.snackbar(
+            backgroundColor: azulLogo,
+            'Concluído',
+            'Atendimento deletado com sucesso',
+            colorText: amarelo);
+        print('Atendimento deletado com sucesso!');
+      } else {
+        Get.snackbar(
+            backgroundColor: azulLogo,
+            'Erro',
+            'Falha ao deletar o Atendimento. Código de status: ${response.statusCode}',
+            colorText: amarelo);
+        print(
+            'Falha ao deletar o Atendimento. Código de status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao realizar a requisição: $e');
+    }
+  }
 }

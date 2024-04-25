@@ -147,9 +147,7 @@ class ListarDadosApi extends StatelessWidget {
             'Informações',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          content: //const Column(),
-
-              Column(
+          content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: dados.entries.map((entry) {
               return Text(

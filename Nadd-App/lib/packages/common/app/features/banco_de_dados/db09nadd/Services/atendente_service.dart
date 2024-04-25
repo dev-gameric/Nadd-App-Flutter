@@ -6,6 +6,7 @@ import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/
 import 'package:nadd/packages/common/app/features/ui/cores/cores.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Server/api_config.dart';
 
+//Listar Atendentes
 class ListarAtendentesServices {
   Future<List<DadosDeAtendentes>> obterAtendentes() async {
     final resposta = await http.get(Uri.parse('$host/atendentes'));
@@ -21,6 +22,7 @@ class ListarAtendentesServices {
   }
 }
 
+//cadastrar Atendentes
 Future<bool> cadastrarAtendentes(
   nomeController,
 ) async {

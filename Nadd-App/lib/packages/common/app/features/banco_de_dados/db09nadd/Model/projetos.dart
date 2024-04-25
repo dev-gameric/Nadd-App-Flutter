@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 class DadosDoProjeto {
+  final int id;
   final String nome;
   final String proponente;
   final String dataInicio;
@@ -8,6 +9,7 @@ class DadosDoProjeto {
   final String statusProjetoEnum;
 
   DadosDoProjeto({
+    required this.id,
     required this.nome,
     required this.proponente,
     required this.dataInicio,
@@ -17,6 +19,7 @@ class DadosDoProjeto {
 
   factory DadosDoProjeto.fromJson(Map<String, dynamic> json) {
     return DadosDoProjeto(
+      id: json['id'],
       nome: json['nome'] ?? '',
       proponente: json['proponente'] ?? '',
       dataInicio: json['dataInicio'] ?? '',

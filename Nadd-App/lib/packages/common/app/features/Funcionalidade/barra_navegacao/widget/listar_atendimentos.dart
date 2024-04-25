@@ -26,6 +26,7 @@ class _ListarAtendimentosState extends State<ListarAtendimentos> {
   }
 
   Future<void> _mostrarDetalhes(DadosDeAtendimento atendimento) async {
+    int idAtendimentoSelecionado = atendimento.id;
     DateTime dataHora = DateTime.parse(atendimento.dataHora);
     String dataHoraFormatada = DateFormat('dd/MM/yyyy HH:mm').format(dataHora);
 
@@ -58,6 +59,15 @@ class _ListarAtendimentosState extends State<ListarAtendimentos> {
                 Navigator.of(context).pop();
               },
               child: const Text('Fechar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                DeletarAtendimentoService deletarAtendimentoService =
+                    DeletarAtendimentoService();
+                await deletarAtendimentoService
+                    .deleteAtendimento(idAtendimentoSelecionado);
+              },
+              child: const Text('Deletar'),
             ),
           ],
         );

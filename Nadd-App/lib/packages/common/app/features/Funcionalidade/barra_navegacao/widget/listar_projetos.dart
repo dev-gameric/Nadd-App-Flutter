@@ -28,12 +28,17 @@ class _ListarProjetosState extends State<ListarProjetos> {
   }
 
   Future<void> _mostrarDetalhes(DadosDoProjeto projeto) async {
+    int idProjetoSelecionado = projeto.id;
     DateTime dataInicio = DateTime.parse(projeto.dataInicio);
     String dataInicioFormatada =
         DateFormat('dd/MM/yyyy HH:mm').format(dataInicio);
 
     DateTime dataFim = DateTime.parse(projeto.dataFim);
     String dataFimFormatada = DateFormat('dd/MM/yyyy HH:mm').format(dataFim);
+    print('data inicio: $dataInicio');
+    print('data inicio formatada: $dataInicioFormatada');
+    print('data fim: $dataFim');
+    print('data fim formatada: $dataFimFormatada');
 
     return showDialog(
       context: context,
@@ -45,7 +50,7 @@ class _ListarProjetosState extends State<ListarProjetos> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Nome: ${projeto.nome}'),
-                Text('Proponente: ${projeto.nome}'),
+                Text('Proponente: ${projeto.proponente}'),
                 Text('Data Inicio: $dataInicioFormatada'),
                 Text('Data Fim: $dataFimFormatada'),
                 Text('Status: ${projeto.statusProjetoEnum}'),
@@ -58,6 +63,14 @@ class _ListarProjetosState extends State<ListarProjetos> {
                 Navigator.of(context).pop();
               },
               child: const Text('Fechar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                DeletarProjetoService deletarProjetoService =
+                    DeletarProjetoService();
+                await deletarProjetoService.deleteProjeto(idProjetoSelecionado);
+              },
+              child: const Text('Deletar'),
             ),
           ],
         );

@@ -23,7 +23,7 @@ public class TipoAtendimentoController {
     @Autowired
     private CadastroTipoAtendimentoService cadastroTipoAtendimento;
 
-    @GetMapping
+    @GetMapping("/t")
     public List<TipoAtendimento> listar(){
         return tipoAtendimentoRepository.listar();
     }

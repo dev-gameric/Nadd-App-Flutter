@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nadd/packages/common/app/features/Funcionalidade/inicial/homepage/widgets/dropdown_button.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/projetos.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Services/projetos_services.dart';
 import 'package:nadd/packages/common/app/features/ui/cores/cores.dart';
@@ -20,7 +21,8 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
   TextEditingController dataFimController = TextEditingController();
   TextEditingController proponenteController = TextEditingController();
   TextEditingController nomeController = TextEditingController();
-  TextEditingController statusController = TextEditingController();
+  TextEditingController statusProjetoController = TextEditingController();
+  String? dropdownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +80,30 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
                           icone: Icons.calendar_month,
                           tipo: 'Data Fim',
                           editingController: dataFimController),
-                      Formulario(
-                        chave: 'statusProjeto',
-                        icone: Icons.personal_injury_outlined,
-                        tipo: 'Status',
-                        editingController: statusController,
+                      // DropdownButton<String>(
+                      //   value: dropdownValue,
+                      //   onChanged: (String? newValue) {
+                      //     setState(() {
+                      //       dropdownValue = newValue;
+                      //     });
+                      //   },
+                      //   items: <String>['Andamento', 'Planejado', 'Encerrado']
+                      //       .map((String value) {
+                      //     return DropdownMenuItem<String>(
+                      //       value: value,
+                      //       child: Text(value),
+                      //     );
+                      //   }).toList(),
+                      //   isExpanded: true,
+                      // ),
+                      DropdownButtonWidget(
+                        items: const ['Planejado', 'Andamento', 'Encerrado'],
+                        value: dropdownValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -95,11 +116,14 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
                 onTap: () async {
                   if (chaveformulario.currentState!.validate()) {
                     final dados = DadosDoProjeto(
+                      id: 0,
                       nome: nomeController.text,
                       proponente: proponenteController.text,
                       dataInicio: formatarData(dataInicioController.text),
                       dataFim: formatarData(dataFimController.text),
-                      statusProjetoEnum: statusController.text.toUpperCase(),
+                      statusProjetoEnum: dropdownValue != null
+                          ? dropdownValue!.toUpperCase()
+                          : '',
                     );
 
                     await cadastrarProjeto(dados);

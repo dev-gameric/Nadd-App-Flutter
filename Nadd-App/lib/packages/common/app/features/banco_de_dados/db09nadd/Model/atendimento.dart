@@ -4,6 +4,7 @@ import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Model/tipo_atendimento.dart';
 
 class DadosDeAtendimento {
+  final int id;
   final DadosDePessoa pessoa;
   final DadosDeTipoAtendimento tipoAtendimento;
   final DadosDeAtendentes atendentes;
@@ -16,6 +17,7 @@ class DadosDeAtendimento {
   final String observacao;
 
   DadosDeAtendimento({
+    required this.id,
     required this.pessoa,
     required this.tipoAtendimento,
     required this.atendentes,
@@ -30,6 +32,7 @@ class DadosDeAtendimento {
 
   factory DadosDeAtendimento.fromJson(Map<String, dynamic> json) {
     return DadosDeAtendimento(
+      id: json['id'],
       pessoa: DadosDePessoa.fromJson(json['pessoa'] ?? {}),
       tipoAtendimento:
           DadosDeTipoAtendimento.fromJson(json['tipoAtendimento'] ?? {}),
