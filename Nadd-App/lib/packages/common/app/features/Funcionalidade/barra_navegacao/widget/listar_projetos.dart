@@ -29,7 +29,6 @@ class _ListarProjetosState extends State<ListarProjetos> {
 
   Future<void> _mostrarDetalhes(DadosDoProjeto projeto) async {
     int idProjetoSelecionado = projeto.id;
-    print('${projeto.id}');
     DateTime dataInicio = DateTime.parse(projeto.dataInicio);
     String dataInicioFormatada =
         DateFormat('dd/MM/yyyy HH:mm').format(dataInicio);
