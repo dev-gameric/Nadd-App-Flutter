@@ -23,7 +23,7 @@ public class PessoaController {
     @Autowired
     private CadastroPessoaService cadastroPessoa;
 
-    @GetMapping
+    @GetMapping("/p")
     public List<Pessoa> listar(){
         return pessoaRepository.listar();
     }
