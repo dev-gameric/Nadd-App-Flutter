@@ -28,6 +28,8 @@ class _ListarProjetosState extends State<ListarProjetos> {
   }
 
   Future<void> _mostrarDetalhes(DadosDoProjeto projeto) async {
+    int idProjetoSelecionado = projeto.id;
+    print('${projeto.id}');
     DateTime dataInicio = DateTime.parse(projeto.dataInicio);
     String dataInicioFormatada =
         DateFormat('dd/MM/yyyy HH:mm').format(dataInicio);
@@ -65,13 +67,19 @@ class _ListarProjetosState extends State<ListarProjetos> {
             ),
             TextButton(
               onPressed: () async {
-                // Navigator.of(context).pop();
-                DeletarProjetoService deletarProjetoService =
-                    DeletarProjetoService();
-
-                int projetoID = 10;
-
-                await deletarProjetoService.deleteProjeto(projetoID);
+                if (idProjetoSelecionado != null) {
+                  DeletarProjetoService deletarProjetoService =
+                      DeletarProjetoService();
+                  await deletarProjetoService
+                      .deleteProjeto(idProjetoSelecionado);
+                } else {
+                  // Exibir uma mensagem de erro caso nenhum projeto tenha sido selecionado
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Nenhum projeto selecionado para deletar.'),
+                    ),
+                  );
+                }
               },
               child: const Text('Deletar'),
             ),

@@ -116,6 +116,7 @@ class _CadastrarProjetoAtalhoState extends State<CadastrarProjetoAtalho> {
                 onTap: () async {
                   if (chaveformulario.currentState!.validate()) {
                     final dados = DadosDoProjeto(
+                      id: 0,
                       nome: nomeController.text,
                       proponente: proponenteController.text,
                       dataInicio: formatarData(dataInicioController.text),
