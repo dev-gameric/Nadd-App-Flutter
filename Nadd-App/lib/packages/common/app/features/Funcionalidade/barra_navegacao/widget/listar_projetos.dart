@@ -67,19 +67,9 @@ class _ListarProjetosState extends State<ListarProjetos> {
             ),
             TextButton(
               onPressed: () async {
-                if (idProjetoSelecionado != null) {
-                  DeletarProjetoService deletarProjetoService =
-                      DeletarProjetoService();
-                  await deletarProjetoService
-                      .deleteProjeto(idProjetoSelecionado);
-                } else {
-                  // Exibir uma mensagem de erro caso nenhum projeto tenha sido selecionado
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Nenhum projeto selecionado para deletar.'),
-                    ),
-                  );
-                }
+                DeletarProjetoService deletarProjetoService =
+                    DeletarProjetoService();
+                await deletarProjetoService.deleteProjeto(idProjetoSelecionado);
               },
               child: const Text('Deletar'),
             ),
