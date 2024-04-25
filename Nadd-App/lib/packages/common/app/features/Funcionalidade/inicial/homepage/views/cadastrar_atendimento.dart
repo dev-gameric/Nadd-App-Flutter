@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:nadd/packages/common/app/features/Funcionalidade/inicial/homepage/widgets/dropdown_button.dart';
 import 'package:nadd/packages/common/app/features/banco_de_dados/db09nadd/Services/atendimento_service.dart';
@@ -6,6 +8,7 @@ import 'package:nadd/packages/common/app/features/ui/tamanho/sizes.dart';
 import 'package:nadd/packages/common/app/features/ui/texto/textos.dart';
 import 'package:nadd/packages/common/app/features/ui/widgets/formulario.dart';
 import 'package:nadd/packages/common/app/features/ui/widgets/nova_tela.dart';
+import 'package:http/http.dart' as http;
 
 class CadastrarAtendimento extends StatefulWidget {
   const CadastrarAtendimento({super.key});
@@ -27,9 +30,66 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
   final atendenteController = TextEditingController();
   final tipoAtendimentoController = TextEditingController();
   String? dropdownButtonAtendente;
+  int? dropdownButtonAtendenteId;
   String? dropdownButtonPessoa;
+  int? dropdownButtonPessoaId;
   String? dropdownButtonTipoAtendimento;
+  int? dropdownButtonTipoAtendimentoId;
   String? dropdownButtonRepentinoGradual;
+
+  List<dynamic> _dadosDaTabelaPessoa = [];
+  List<dynamic> _dadosDaTabelaAtendente = [];
+  List<dynamic> _dadosDaTabelaTipoAtendimento = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _buscarDadosDaTabelaPessoa();
+    _buscarDadosDaTabelaAtendente();
+    _buscarDadosDaTabelaTipoAtendimento();
+  }
+
+  Future<void> _buscarDadosDaTabelaPessoa() async {
+    var url =
+        'http://10.0.2.2:8080/pessoa/p'; // Substitua pela URL da sua API Spring Boot
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _dadosDaTabelaPessoa = jsonDecode(response.body);
+      });
+    } else {
+      print('Erro ao carregar os dados da tabela estrangeira');
+    }
+  }
+
+  Future<void> _buscarDadosDaTabelaAtendente() async {
+    var url =
+        'http://10.0.2.2:8080/atendentes/a'; // Substitua pela URL da sua API Spring Boot
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _dadosDaTabelaAtendente = jsonDecode(response.body);
+      });
+    } else {
+      print('Erro ao carregar os dados da tabela estrangeira');
+    }
+  }
+
+  Future<void> _buscarDadosDaTabelaTipoAtendimento() async {
+    var url =
+        'http://10.0.2.2:8080/tipo-atendimento/t'; // Substitua pela URL da sua API Spring Boot
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _dadosDaTabelaTipoAtendimento = jsonDecode(response.body);
+      });
+    } else {
+      print('Erro ao carregar os dados da tabela estrangeira');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,30 +173,6 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
                       ),
                       maxLines: null,
                     ),
-                    // Formulario(
-                    //   chave: 'repentinoGradual',
-                    //   icone: Icons.personal_injury_outlined,
-                    //   tipo: 'Repentino ou Gradual',
-                    //   editingController: repentinoGradualController,
-                    // ),
-                    // Formulario(
-                    //   chave: '',
-                    //   icone: Icons.personal_injury_outlined,
-                    //   tipo: 'Atendente',
-                    //   editingController: atendenteController,
-                    // ),
-                    // Formulario(
-                    //   chave: '',
-                    //   icone: Icons.personal_injury_outlined,
-                    //   tipo: 'Pessoa',
-                    //   editingController: pessoaController,
-                    // ),
-                    // Formulario(
-                    //   chave: '',
-                    //   icone: Icons.personal_injury_outlined,
-                    //   tipo: 'Tipo Atendimento',
-                    //   editingController: tipoAtendimentoController,
-                    // ),
                     DropdownButtonWidget(
                       value: dropdownButtonRepentinoGradual,
                       items: const [
@@ -146,6 +182,48 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownButtonRepentinoGradual = newValue;
+                        });
+                      },
+                    ),
+                    DropdownButtonWidget(
+                      value: dropdownButtonPessoa,
+                      items: _dadosDaTabelaPessoa.map<String>((item) {
+                        return item['nome'];
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownButtonPessoa = newValue;
+                          dropdownButtonPessoaId =
+                              _dadosDaTabelaPessoa.firstWhere(
+                                  (item) => item['nome'] == newValue)['id'];
+                        });
+                      },
+                    ),
+                    DropdownButtonWidget(
+                      value: dropdownButtonTipoAtendimento,
+                      items: _dadosDaTabelaTipoAtendimento.map<String>((item) {
+                        return item['nome'];
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownButtonTipoAtendimento = newValue;
+                          dropdownButtonTipoAtendimentoId =
+                              _dadosDaTabelaTipoAtendimento.firstWhere(
+                                  (item) => item['nome'] == newValue)['id'];
+                        });
+                      },
+                    ),
+                    DropdownButtonWidget(
+                      value: dropdownButtonAtendente,
+                      items: _dadosDaTabelaAtendente.map<String>((item) {
+                        return item['nome'];
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownButtonAtendente = newValue;
+                          dropdownButtonAtendenteId =
+                              _dadosDaTabelaAtendente.firstWhere(
+                                  (item) => item['nome'] == newValue)['id'];
                         });
                       },
                     ),
@@ -165,11 +243,11 @@ class _CadastrarAtendimentoState extends State<CadastrarAtendimento> {
                       observacaoController,
                       ocorrenciaController,
                       queixaPrincipalController,
-                      repentinoGradualController,
+                      dropdownButtonRepentinoGradual,
                       sintomasController,
-                      pessoaController,
-                      atendenteController,
-                      tipoAtendimentoController,
+                      dropdownButtonPessoaId,
+                      dropdownButtonAtendenteId,
+                      dropdownButtonTipoAtendimentoId,
                     );
                   }
                 },
